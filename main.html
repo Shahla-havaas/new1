@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graph Machine Learning Research Group</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+  <style>
+    /* فونت و تنظیمات پایه */
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      background: #fff;
+      color: #333;
+      direction: ltr;
+      text-align: left;
+    }
+ /* کانتینر کلی بخش اعضا */
+    #members {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      color: #333;
+    }
+    #members h2 {
+      color: #0082C8;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+    }
+   .social-icons a img {
+   vertical-align: middle;
+   display: inline-block;
+   height: 20px;
+   width: 20px;
+   }
+
+    /* بخش Supervisor */
+    .supervisor {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .supervisor img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 15px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .supervisor .name {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+    .supervisor .title {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+    .social-icons {
+      margin-bottom: 15px;
+    }
+    .social-icons a {
+      color: #0082C8;
+      margin: 0 8px;
+      font-size: 1.3rem;
+      transition: color 0.3s ease;
+      display: inline-block;
+    }
+    .social-icons a:hover {
+      color: #005f8a;
+    }
+    .supervisor .research-area {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #222;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    /* بخش دانشجویان */
+    .students-section {
+      margin-bottom: 50px;
+    }
+    .students-section h3 {
+      font-size: 1.6rem;
+      color: #005f8a;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 6px;
+    }
+    .students-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 30px 20px;
+      justify-items: center;
+    }
+    .student-card {
+      text-align: center;
+      max-width: 180px;
+    }
+    .student-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }
+    .student-card .name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 3px;
+    }
+    .student-card .title {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+    .student-card .social-icons {
+      margin-bottom: 10px;
+    }
+    .student-card .research-area {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #444;
+      line-height: 1.3;
+    }
+#alumni ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+#alumni ul li {
+  margin-bottom: 12px;
+}
+
+    /* ریسپانسیو */
+    @media (max-width: 600px) {
+      .students-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+      .supervisor img {
+        width: 120px;
+        height: 120px;
+      }
+      .student-card img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    /* هدر */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-container img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover,
+    nav a.active {
+      background-color: #0082C8;
+      color: white;
+    }
+    /* منوی همبرگری */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 25px;
+      height: 20px;
+      justify-content: space-between;
+    }
+    .hamburger span {
+      height: 3px;
+      background: #333;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    /* وقتی منو باز است */
+    nav.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 20px; /* تغییر از right به left */
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      padding: 10px 15px;
+      z-index: 1000;
+    }
+    nav.open a {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    nav.open a:last-child {
+      border-bottom: none;
+    }
+    /* تصویر بزرگ با لایه مات و محتوا وسط */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      background: url('Home.jpeg') center center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0,0,0,0.7); /* لایه مات */
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 90%;
+    }
+    .hero-content img {
+      height: 100px;
+      margin-bottom: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-content h1 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      border-bottom: 1px solid #ddd;
+    }
+    .hero-content p {
+      margin: 5px 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    /* بخش‌های محتوا */
+    section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    section:last-child {
+      border-bottom: none;
+    }
+    section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #0082C8;
+    }
+    section p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+    
+    /* ریسپانسیو */
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <img src="Logo.jpeg" alt="Logo" />
+  </div>
+  <div class="hamburger" id="hamburger" aria-label="Open menu" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <nav id="nav-menu" role="navigation" aria-label="Main menu">
+    <a href="#about" class="menu-link">About</a>
+    <a href="#members" class="menu-link">Members</a>
+    <a href="#publication" class="menu-link">Publication</a>
+    <a href="#resources" class="menu-link">Resources</a>
+    <a href="#contact" class="menu-link">Contact</a>
+  </nav>
+</header>
+
+<div class="hero" role="banner" aria-label="Main large image">
+  <div class="hero-content">
+    <img src="logo.png" alt="Site logo" />
+    <h1>Graph Machine Learning Research Group</h1>
+    <p>Advancing AI through graph-structured data and deep learning</p>
+    <p>University of Kurdistan</p>
+  </div>
+</div>
+
+<main>
+  <section id="about" tabindex="0">
+    <h2>About</h2>
+    <p>The Graph Machine Learning Research Group at the University of Kurdistan is dedicated to advancing the field of artificial intelligence through innovative research on graph-structured data and deep learning techniques. Our interdisciplinary team focuses on developing novel algorithms and models that leverage the complex relationships inherent in graph data to solve real-world problems across various domains such as social networks, bioinformatics, recommendation systems, and more.
+
+Committed to excellence in both theoretical foundations and practical applications, we strive to push the boundaries of machine learning by exploring new methodologies that improve accuracy, scalability, and interpretability. </p>
+  </section>
+
+  <section id="members" tabindex="0">
+    <h2>Members</h2>
+    <!-- بخش Supervisor -->
+  <div class="supervisor">
+    <img src="supervisor.jpg" alt="Supervisor Photo" />
+    <div class="name">Dr. Alireza Abdullahouri</div>
+    <div class="title">Supervisor</div>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/alireza-abdollahpouri-2a51a94b/" aria-label="LinkedIn of Dr. John Smith">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://scholar.google.com/citations?hl=en&user=1H1gDHQAAAAJ" target="_blank" aria-label="Google Scholar">
+      <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+      </a>
+
+      <a href="" target="_blank" aria-label="Twitter of Dr. John Smith">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </div>
+    <div class="research-area">
+      Research interests include graph neural networks, deep learning, and AI applications in social networks.
+    </div>
+  </div>
+
+  <!-- بخش PHD Students -->
+  <div class="students-section">
+    <h3>PHD Students</h3>
+    <div class="students-grid">
+      <!-- دانشجوی اول -->
+      <div class="student-card">
+        <img src="phd1.jpg" alt="PhD Student 1" />
+        <div class="name">Shahla Havas</div>
+        <div class="title">PhD Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/shahla-havaas-690232139/" target="_blank" aria-label="LinkedIn of Alice Johnson">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://scholar.google.com/citations?hl=en&user=IpUam4sAAAAJ" target="_blank" aria-label="Google Scholar">
+      <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+      </a>
+
+          <a href="" target="_blank" aria-label="Twitter of Alice Johnson">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Improving the performance of recommender systems using hybrid methods based on graph neural networks
+        </div>
+      </div>
+      <!-- دانشجوی دوم -->
+      <div class="student-card">
+        <img src="phd2.jpg" alt="PhD Student 2" />
+        <div class="name">Sajad Bastami</div>
+        <div class="title">PhD Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/boblee" target="_blank" aria-label="LinkedIn of Bob Lee">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+      <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+      </a>
+
+          <a href="https://twitter.com/boblee" target="_blank" aria-label="Twitter of Bob Lee">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Interested in graph-based semi-supervised learning and AI interpretability.
+        </div>
+      </div>
+      <!-- دانشجوی سوم -->
+      <div class="student-card">
+        <img src="phd3.jpg" alt="PhD Student 3" />
+        <div class="name">Mohammad Aliabadi</div>
+        <div class="title">PhD Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/carolwhite" target="_blank" aria-label="LinkedIn of Carol White">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+      <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+      </a>
+
+          <a href="https://twitter.com/carolwhite" target="_blank" aria-label="Twitter of Carol White">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Specializes in graph convolutional networks and recommendation systems.
+        </div>
+      </div>
+      <!-- دانشجوی چهارم -->
+      <div class="student-card">
+        <img src="phd4.jpg" alt="PhD Student 4" />
+        <div class="name">Zahra Khani</div>
+        <div class="title">PhD Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/davidkim" target="_blank" aria-label="LinkedIn of David Kim">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+      <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+      </a>
+
+          <a href="https://twitter.com/davidkim" target="_blank" aria-label="Twitter of David Kim">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Research on graph attention networks and explainable AI.
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+
+  <!-- بخش Master Students -->
+  <div class="students-section">
+    <h3>Master Students</h3>
+    <div class="students-grid">
+      <!-- دانشجوی اول -->
+      <div class="student-card">
+        <img src="master1.jpg" alt="Master Student 1" />
+        <div class="name">Grace Hall</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/gracehall" target="_blank" aria-label="LinkedIn of Grace Hall">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+            <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+         </a>
+
+          <a href="https://twitter.com/gracehall" target="_blank" aria-label="Twitter of Grace Hall">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Focus on graph data mining and network analysis.
+        </div>
+      </div>
+      <!-- دانشجوی دوم -->
+      <div class="student-card">
+        <img src="master2.jpg" alt="Master Student 2" />
+        <div class="name">Henry Adams</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/henryadams" target="_blank" aria-label="LinkedIn of Henry Adams">
+            <i class="fab fa-linkedin"></i>
+          </a><a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+           <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+          </a>
+
+          <a href="https://twitter.com/henryadams" target="_blank" aria-label="Twitter of Henry Adams">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Researching graph neural networks for bioinformatics.
+        </div>
+      </div>
+      <!-- دانشجوی سوم -->
+      <div class="student-card">
+        <img src="master3.jpg" alt="Master Student 3" />
+        <div class="name">Isabel Clark</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/isabelclark" target="_blank" aria-label="LinkedIn of Isabel Clark">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+            <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+          </a>
+
+          <a href="https://twitter.com/isabelclark" target="_blank" aria-label="Twitter of Isabel Clark">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Interested in explainable AI and graph embeddings.
+        </div>
+      </div>
+      <!-- دانشجوی چهارم -->
+      <div class="student-card">
+        <img src="master4.jpg" alt="Master Student 4" />
+        <div class="name">Jack Turner</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/jackturner" target="_blank" aria-label="LinkedIn of Jack Turner">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+      <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+      </a>
+
+          <a href="https://twitter.com/jackturner" target="_blank" aria-label="Twitter of Jack Turner">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Focused on temporal graph analysis and AI ethics.
+        </div>
+      </div>
+      <!-- دانشجوی پنجم -->
+      <div class="student-card">
+        <img src="master5.jpg" alt="Master Student 5" />
+        <div class="name">Karen Scott</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/karenscott" target="_blank" aria-label="LinkedIn of Karen Scott">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+      <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+      </a>
+
+          <a href="https://twitter.com/karenscott" target="_blank" aria-label="Twitter of Karen Scott">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Works on graph-based natural language processing.
+        </div>
+      </div>
+<!-- دانشجوی اول -->
+      <div class="student-card">
+        <img src="master1.jpg" alt="Master Student 1" />
+        <div class="name">Grace Hall</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/gracehall" target="_blank" aria-label="LinkedIn of Grace Hall">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+            <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+         </a>
+
+          <a href="https://twitter.com/gracehall" target="_blank" aria-label="Twitter of Grace Hall">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Focus on graph data mining and network analysis.
+        </div>
+      </div>
+<!-- دانشجوی اول -->
+      <div class="student-card">
+        <img src="master1.jpg" alt="Master Student 1" />
+        <div class="name">Grace Hall</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/gracehall" target="_blank" aria-label="LinkedIn of Grace Hall">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+            <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+         </a>
+
+          <a href="https://twitter.com/gracehall" target="_blank" aria-label="Twitter of Grace Hall">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Focus on graph data mining and network analysis.
+        </div>
+      </div>
+<!-- دانشجوی اول -->
+      <div class="student-card">
+        <img src="master1.jpg" alt="Master Student 1" />
+        <div class="name">Grace Hall</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/gracehall" target="_blank" aria-label="LinkedIn of Grace Hall">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+            <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+         </a>
+
+          <a href="https://twitter.com/gracehall" target="_blank" aria-label="Twitter of Grace Hall">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Focus on graph data mining and network analysis.
+        </div>
+      </div>
+<!-- دانشجوی اول -->
+      <div class="student-card">
+        <img src="master1.jpg" alt="Master Student 1" />
+        <div class="name">Grace Hall</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/gracehall" target="_blank" aria-label="LinkedIn of Grace Hall">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+            <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+         </a>
+
+          <a href="https://twitter.com/gracehall" target="_blank" aria-label="Twitter of Grace Hall">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Focus on graph data mining and network analysis.
+        </div>
+      </div>
+      <!-- دانشجوی ششم -->
+      <div class="student-card">
+        <img src="master6.jpg" alt="Master Student 6" />
+        <div class="name">Liam Brown</div>
+        <div class="title">Master Student</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/liambrown" target="_blank" aria-label="LinkedIn of Liam Brown">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://scholar.google.com/citations?user=..." target="_blank" aria-label="Google Scholar">
+      <img src="google-scholar-icon.png" alt="Google Scholar" style="width:20px; height:20px;" />
+      </a>
+
+          <a href="https://twitter.com/liambrown" target="_blank" aria-label="Twitter of Liam Brown">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Interested in AI fairness and graph data visualization.
+        </div>
+      </div>
+    </div>
+  <h3>External</h3>
+    <div class="students-grid">
+      <!-- دانشجوی اول -->
+      <div class="student-card">
+        <img src="other1.jpg" alt="Researcher" />
+        <div class="name">Mansour Joya</div>
+        <div class="title">Researcher</div>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/mansourjouya/" target="_blank" aria-label="LinkedIn of Grace Hall">
+            <i class="fab fa-linkedin"></i>
+          </a>
+         <a href="https://github.com/MansourJouya" target="_blank" aria-label="Google Scholar">
+            <img src="github.jpg" alt="Google Scholar" style="width:20px; height:20px;" />
+         </a>
+
+          <a href="https://x.com/MansourJouya" target="_blank" aria-label="Twitter of Grace Hall">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </div>
+        <div class="research-area">
+          Senior Software Developer | Researcher in Recommender Systems & Machine Learning
+        </div>
+      </div>
+
+  </div>
+<section id="alumni" tabindex="0" style="max-width: 1200px; margin: 10px auto; font-family: 'Vazirmatn', Tahoma, sans-serif;">
+  <h2 style="color: #0082C8; border-bottom: None; padding-bottom: 8px; margin-bottom: 25px;">Alumni</h2>
+  
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    <li style="margin-bottom: 20px;">
+      <strong>Farshid Ahmad:</strong> Investigating the academic progress or decline of high school students in Sanandaj using graph analysis
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Samaneh Ghaderi:</strong> Modularity Improvement for Community Detection in Overlapping Social Networks
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Zahra Ghaffaripour:</strong> Community Detection in Weighted Networks using a Multiobjective Genetic Algorithm
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Nasim Isaeian:</strong> Machine Learning Based Thyroid Disease Prediction Result Improvement Using Extracted Graph Features
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Shakila Jahanbin:</strong> A Political Optimizer Algorithm to Achieve P-fairness in Multi-Stakeholder Recommender Systems
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Sara Karamveiseh:</strong> Improving a Multi-Stakeholder Recommender System Using Multi objective Evolutionary Algorithm based on Decomposition
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Reza Mahmoudi:</strong> Link Prediction by Adversarial Deep Nonnegative Matrix Factorization
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Tara Noori:</strong> Fair multi-stakeholder movie recommender system with hypergraph ranking
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Smira Rafiee:</strong> Link prediction based on common neighbors degree penalization
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Shadi Rahimi:</strong> Presenting a population-based multi-objective approach for detecting communities in complex networks
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Sakar Omar Khdir:</strong> Interlayer Link Prediction in Multiplex Networks by Analyzing Matching Degree
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Mastooreh Armion:</strong> Identifying influential nodes in complex networks using reverse link prediction
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Chiman Salavati:</strong> Identifying the Most Influential Users in Social Networks for Viral Marketing with Minimum Cost
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Marjan Ziaei:</strong> Investigating and Reducing Cascading Failures in weighted complex Networks
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Fatemeh Zamani:</strong> A data placement strategy to reduce cost and data transmission delay in fog Infrastructure
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Kaziwa Karim Majid:</strong> An Anti-Money Laundering Method Using Graph Machine Learning
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Sahar Dogohari:</strong> Improving a hot product recommendation system using tripartite graph and link prediction
+    </li>
+    <li style="margin-bottom: 20px;">
+      <strong>Mahtab Ahmadi:</strong> Community detection Based on content in social networks using user frequent pattern mining and label propagation
+    </li>
+  </ul>
+</section>
+
+  <!-- فونت آوسام و آیکون اسکالر -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/ai-icons@1.0.0/css/ai-icons.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  </section>
+
+  
+   
+    <section id="publication" tabindex="0" style="max-width: 900px; margin: 40px auto; font-family: 'Vazirmatn', Tahoma, sans-serif; color: #333;">
+  <h2 style="color: #0082C8; border-bottom: 2px solid #0082C8; padding-bottom: 8px; margin-bottom: 30px;">
+    Publications
+  </h2>
+  
+  <p style="font-weight: 600; margin-bottom: 25px;">Our 10 selected publications sorted by most recent.</p>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      On the Regularization of Learnable Embeddings for Time Series Processing
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      Preprint &nbsp;&bull;&nbsp; Spatiotemporal data, Graph neural networks, Regularization, Transfer learning, Global-local models
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      In processing multiple time series, accounting for the individual features of each sequence can be challenging. Modern deep learning methods combine global and local layers, often implemented as learnable embeddings. This paper investigates regularization methods for these embeddings, improving performance and transferability.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      Learning Latent Graph Structures and their Uncertainty
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      Preprint &nbsp;&bull;&nbsp; Graph structure learning, Graph neural networks, Model calibration
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      This paper shows that minimizing point-prediction loss does not guarantee proper learning of latent relational information. It proposes a sampling-based method for joint learning of graph structure and uncertainty.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      Temporal Graph ODEs for Irregularly-Sampled Time Series
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      International Joint Conferences on Artificial Intelligence, 2024 &nbsp;&bull;&nbsp; Spatiotemporal graphs, Graph neural networks, Irregular sampling
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      Introduces the Temporal Graph Ordinary Differential Equation framework to learn temporal and spatial dynamics from irregularly sampled graph streams, achieving state-of-the-art results.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      Graph-based Virtual Sensing from Sparse and Partial Multivariate Observations
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      International Conference on Learning Representations, 2024 &nbsp;&bull;&nbsp; Spatiotemporal graphs, Graph neural networks, Imputation, Graph structure learning
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      Proposes a graph deep learning method to infer signals at unmonitored locations by exploiting dependencies between correlated variables, outperforming state-of-the-art virtual sensing techniques.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      Graph-based Forecasting with Missing Data through Spatiotemporal Downsampling
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      International Conference on Machine Learning, 2024 &nbsp;&bull;&nbsp; Spatiotemporal graphs, Forecasting
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      Addresses forecasting with missing data by hierarchical spatiotemporal downsampling and interpretable attention mechanisms, outperforming existing methods on benchmarks.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      Graph Deep Learning for Time Series Forecasting
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      Preprint &nbsp;&bull;&nbsp; Spatiotemporal graphs, Forecasting
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      Reviews graph-based deep learning methods for correlated time series forecasting, discussing architectures, design principles, and future research directions.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      Graph Representation Learning (special session at ESANN 2023)
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      ESANN, 2023 &nbsp;&bull;&nbsp; Graph neural networks
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      Summarizes fundamental concepts and challenges in graph representation learning and contributions accepted for the ESANN 2023 special session.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      A Survey on Graph Neural Networks for Time Series: Forecasting, Classification, Imputation, and Anomaly Detection
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      IEEE Transactions on Pattern Analysis and Machine Intelligence, 2024 &nbsp;&bull;&nbsp; Spatiotemporal graphs, Graph neural networks, Forecasting, Imputation, Anomaly detection
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      Comprehensive review of graph neural networks for time series analysis covering forecasting, classification, anomaly detection, and imputation.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      Graph-based Time Series Clustering for End-to-End Hierarchical Forecasting
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      International Conference on Machine Learning, 2024 &nbsp;&bull;&nbsp; Spatiotemporal graphs, Forecasting, Time series clustering, Pooling
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      Proposes a graph-based method to unify relational and hierarchical inductive biases for hierarchical time series forecasting using trainable graph pooling.
+    </p>
+  </article>
+
+  <article style="margin-bottom: 40px;">
+    <h3 style="margin: 0 0 6px; color: #005f8a; font-weight: 700; font-size: 1.3rem;">
+      Feudal Graph Reinforcement Learning
+    </h3>
+    <div style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+      Transactions on Machine Learning Research, 2024 &nbsp;&bull;&nbsp; Reinforcement learning, Relational inductive biases, Graph neural networks
+    </div>
+    <p style="line-height: 1.4; font-size: 1rem; margin: 0;">
+      Introduces a hierarchical reinforcement learning framework with pyramidal message-passing architecture to tackle composable control problems.
+    </p>
+  </article>
+
+
+  </section>
+
+  <section id="resources" tabindex="0">
+    <h2>Resources</h2>
+    <p>Relevant resources and data...</p>
+  </section>
+
+  <section id="contact" tabindex="0">
+    <h2>Contact</h2>
+    <p>Contact information...</p>
+  </section>
+</main>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+  });
+
+  // Close menu when clicking on a menu link (better UX)
+  document.querySelectorAll('.menu-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if(navMenu.classList.contains('open')) {
+        navMenu.classList.remove('open');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

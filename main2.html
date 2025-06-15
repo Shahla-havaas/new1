@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Graph Machine Learning Research Group</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      background: #fff;
+      color: #333;
+      direction: ltr;
+      text-align: left;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-container img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover,
+    nav a.active {
+      background-color: #0082C8;
+      color: white;
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 25px;
+      height: 20px;
+      justify-content: space-between;
+    }
+    .hamburger span {
+      height: 3px;
+      background: #333;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    nav.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      padding: 10px 15px;
+      z-index: 1000;
+    }
+    nav.open a {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    nav.open a:last-child {
+      border-bottom: none;
+    }
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      background: url('Home.jpeg') center center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 90%;
+    }
+    .hero-content img {
+      height: 100px;
+      margin-bottom: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-content h1 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .hero-content p {
+      margin: 5px 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    /* بخش‌های محتوا */
+    section {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      /* border-bottom: 1px solid #ddd;  حذف شد */
+      text-align: left;
+    }
+    section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #0082C8;
+      border-bottom: 2px solid #0082C8;
+      padding-bottom: 8px;
+    }
+    section p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+    /* کانتینر کلی بخش اعضا */
+    #members {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      color: #333;
+    }
+    #members h2 {
+      color: #0082C8;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #0082C8;
+      padding-bottom: 8px;
+    }
+    .social-icons a img {
+      vertical-align: middle;
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+    }
+    .supervisor {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .supervisor img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 15px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .supervisor .name {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+    .supervisor .title {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+    .social-icons {
+      margin-bottom: 15px;
+    }
+    .social-icons a {
+      color: #0082C8;
+      margin: 0 8px;
+      font-size: 1.3rem;
+      transition: color 0.3s ease;
+      display: inline-block;
+    }
+    .social-icons a:hover {
+      color: #005f8a;
+    }
+    .supervisor .research-area {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #222;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+    .students-section {
+      margin-bottom: 50px;
+    }
+    .students-section h3 {
+      font-size: 1.6rem;
+      color: #005f8a;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 6px;
+    }
+    .students-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 30px 20px;
+      justify-items: center;
+    }
+    .student-card {
+      text-align: center;
+      max-width: 180px;
+    }
+    .student-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }
+    .student-card .name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 3px;
+    }
+    .student-card .title {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+    .student-card .social-icons {
+      margin-bottom: 10px;
+    }
+    .student-card .research-area {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #444;
+      line-height: 1.3;
+    }
+    #alumni ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+    #alumni ul li {
+      margin-bottom: 12px;
+    }
+    @media (max-width: 600px) {
+      .students-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+      .supervisor img {
+        width: 120px;
+        height: 120px;
+      }
+      .student-card img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo-container">
+    <img src="Logo.jpeg" alt="Logo" />
+  </div>
+  <div class="hamburger" id="hamburger" aria-label="Open menu" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <nav id="nav-menu" role="navigation" aria-label="Main menu">
+    <a href="#about" class="menu-link">About</a>
+    <a href="#members" class="menu-link">Members</a>
+    <a href="#publication" class="menu-link">Publication</a>
+    <a href="#resources" class="menu-link">Resources</a>
+    <a href="#contact" class="menu-link">Contact</a>
+  </nav>
+</header>
+<div class="hero" role="banner" aria-label="Main large image">
+  <div class="hero-content">
+    <img src="logo.png" alt="Site logo" />
+    <h1>Graph Machine Learning Research Group</h1>
+    <p>Advancing AI through graph-structured data and deep learning</p>
+    <p>University of Kurdistan</p>
+  </div>
+</div>
+<main>
+  <section id="about" tabindex="0">
+    <h2>About</h2>
+    <p>...</p>
+  </section>
+  <section id="members" tabindex="0">
+    <h2>Members</h2>
+    <!-- Supervisor, PhD Students, Master Students ... -->
+  </section>
+  <section id="alumni" tabindex="0">
+    <h2>Alumni</h2>
+    <ul>
+      <li><strong>Farshid Ahmad:</strong> Investigating the academic progress or decline of high school students in Sanandaj using graph analysis</li>
+      <!-- ... سایر اعضا ... -->
+    </ul>
+  </section>
+  <section id="publication" tabindex="0">
+    <h2>Publications</h2>
+    <!-- مقالات ... -->
+  </section>
+</main>
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('.menu-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if(navMenu.classList.contains('open')) {
+        navMenu.classList.remove('open');
+      }
+    });
+  });
+</script>
+</body>
+</html>
